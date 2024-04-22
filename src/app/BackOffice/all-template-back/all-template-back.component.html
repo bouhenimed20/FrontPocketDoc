@@ -5,12 +5,14 @@
   <!-- End Required CSS -->
   <link rel="shortcut icon" href="/assets/BackOffice/images/favicon.png" />
   
-  
- <!-- <div class="container-fluid">
-  <app-navbar-back></app-navbar-back> 
-<app-sidebar-back></app-sidebar-back>
-    </div>-->
-    <router-outlet></router-outlet>
+<div class="container-scroller">
+  <app-navbar-back></app-navbar-back>
+    <div class="container-fluid page-body-wrapper">
+      <app-sidebar-back></app-sidebar-back>
+      <router-outlet></router-outlet> 
+    </div>   
+</div>   
+
 
 
  <!-- Required JS -->

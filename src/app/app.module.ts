@@ -14,6 +14,7 @@ import { SidebarBackComponent } from './BackOffice/sidebar-back/sidebar-back.com
 import { ListEventComponent } from './BackOffice/list-event/list-event.component';
 import { ListReclamationComponent } from './BackOffice/liste-reclamation/liste-reclamation.component';
 import { AjouterreclamationComponent } from './FrontOffice/ajouterreclamation/ajouterreclamation.component';
+import { ReclamationDetailsComponent } from './BackOffice/reclamation-details/reclamation-details.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AjouterreclamationComponent } from './FrontOffice/ajouterreclamation/aj
     SidebarBackComponent,
     ListEventComponent,
     ListReclamationComponent,
-    AjouterreclamationComponent
+    AjouterreclamationComponent,
+    ReclamationDetailsComponent
   ],
   imports: [
     BrowserModule,

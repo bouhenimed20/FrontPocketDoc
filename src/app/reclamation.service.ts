@@ -19,8 +19,8 @@ export class ReclamationService {
     return this.http.post<Reclamation>(`${this.apiUrl}/add-reclamation`, reclamation);
   }
 
-  getReclamation(id: number): Observable<Reclamation> {
-    return this.http.get<Reclamation>(`${this.apiUrl}/retrieve-reclamation/${id}`);
+  getReclamation(idRec: number): Observable<Reclamation> {
+    return this.http.get<Reclamation>(`${this.apiUrl}/retrieve-reclamation/${idRec}`);
   }
 
   removeReclamation(id: number): Observable<void> {

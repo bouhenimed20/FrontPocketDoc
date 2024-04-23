@@ -3,24 +3,29 @@
     <div class="col-lg-12 main-panel">
       <div class="content-wrapper">
         <div class="row">
-          <div class="col-md-12 grid-margin">
-            <div class="row">
-              <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                <h3 class="font-weight-bold">Welcome Aamir</h3>
-                <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+          <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
+            <div class="card data-icon-card-primary" style="margin-bottom: 20px;">
+              <div class="card-body">
+                <p class="card-title text-white">Nombre de Reclamation</p>                      
+                <div class="row">
+                  <div class="col-8 text-white">
+                    <h2>{{ totalClaims }}</h2>
+                  </div>
+                  <div class="col-4 background-icon"></div>
+                </div>
               </div>
             </div>
-        
+          </div>
         </div>
-
+        
         <div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
-              <div class="table-responsive">
+              <div class="table-responsive mx-auto">
                 <table class="reclamation-table mt-5 table table-striped">
                   <thead>
                     <tr>
-                      <th>id</th>
+                      <th>N°</th>
                       <th>Description</th>
                       <th>Date</th>
                       <th>Status</th>
@@ -30,15 +35,14 @@
                   <tbody>
                     <tr *ngFor="let reclamation of reclamations">
                       <td>{{ reclamation.idRec }}</td>
-                      <td>{{ reclamation.descriptionRec }}</td>
+                      <td>{{ reclamation.descriptionRec.toString() | slice:0:50 }}...</td>
                       <td>{{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</td>
                       <td>
-                        <span [ngClass]="{'status-circle': true, 'pending': reclamation.status === 'pending', 'approved': reclamation.status === 'approved'}"></span>
-                        <span class="status-text">{{ reclamation.status }}</span>
+                        <span class="badge badge-warning">{{ reclamation.status }}</span>
                       </td>
                       <td>
-                        <button class="btn btn-danger mr-2" (click)="confirmDelete(reclamation.idRec)">Delete</button>
-                        <button class="btn btn-dark btn-icon-text" (click)="navigateToModify(reclamation.idRec)">Modify</button>
+                        <button class="btn btn-danger btn-sm mr-2" (click)="confirmDelete(reclamation.idRec)">Delete</button>
+                        <button class="btn btn-info btn-sm mr-2" (click)="respondToClaim(reclamation.idRec)">Respond</button>
                       </td>
                     </tr>
                   </tbody>

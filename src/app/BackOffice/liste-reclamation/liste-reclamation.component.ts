@@ -10,6 +10,7 @@ import { ReclamationService } from '../../reclamation.service';
 })
 export class ListReclamationComponent implements OnInit {
   reclamations: Reclamation[] = [];
+  totalClaims: number = 0;
   error: string = '';
 
   constructor(private reclamationService: ReclamationService, private router: Router) { }
@@ -23,7 +24,7 @@ export class ListReclamationComponent implements OnInit {
       .subscribe(
         (reclamations: Reclamation[]) => {
           this.reclamations = reclamations;
-          console.log(reclamations)
+          this.calculateTotalClaims();
           this.error = ''; // error message if request succeeds
         },
         (error: any) => {
@@ -34,6 +35,10 @@ export class ListReclamationComponent implements OnInit {
           }
         }
       );   
+  }
+
+  calculateTotalClaims(): void {
+    this.totalClaims = this.reclamations.length;
   }
 
   confirmDelete(id: number): void {
@@ -59,4 +64,12 @@ export class ListReclamationComponent implements OnInit {
   navigateToModify(idRec: number): void {
     this.router.navigate(['/modifierreclamation', idRec]); // Corrected path
   }
+
+
+  respondToClaim(idRec: number): void {
+    this.router.navigate(['/admin/reclamation', idRec]); // Redirect to the detail page of the claim
+  }
+  
+
+
 }

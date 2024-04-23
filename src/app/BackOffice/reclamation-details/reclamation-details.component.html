@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-7 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <blockquote class="blockquote">
+                    <h4 class="card-title">Reclamation N° {{ reclamation?.idRec }}</h4>
+                    <div *ngIf="reclamation">
+                      <p><span class="semi-bold-text">Description:</span>     {{ reclamation.descriptionRec }}</p>
+                      <p><span class="semi-bold-text">Date:</span>     {{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</p>
+                      <p><span class="semi-bold-text">Status:</span>     <span [ngClass]="{'text-success': reclamation.status === 'resolved', 'text-danger': reclamation.status === 'pending'}">{{ reclamation.status }}</span></p>
+               
+                    </div>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Response</h4>
+                  <p class="card-description">
+                    Respond to this claim
+                  </p>
+                  <form class="forms-sample">
+                    <div class="form-group">
+                      <textarea class="form-control" id="exampleTextarea1" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

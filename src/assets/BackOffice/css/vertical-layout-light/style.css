@@ -28433,13 +28433,16 @@ div.tagsinput span.tag a {
 
 .main-panel {
   transition: width 0.25s ease, margin 0.25s ease;
-  width: 100vw;
+  width: 100vmax;
   min-height: calc(100vh - 60px);
-  display: -webkit-flex;
+  max-width: 1300px; /* Set the maximum width */
+  margin: 0 auto; /* Center the main panel */
+  padding-right: 15px; /* Adjust for scrollbar */
+  padding-left: 15px; /* Adjust for scrollbar */
   display: flex;
-  -webkit-flex-direction: column;
   flex-direction: column;
 }
+
 
 
 @media (max-width: 991px) {

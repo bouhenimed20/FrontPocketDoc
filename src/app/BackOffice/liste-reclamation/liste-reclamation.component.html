@@ -1,0 +1,49 @@
+
+        <div class="container-fluid">
+
+  <div class="row mt-5">
+
+    <div class="main-panel">
+      <div class="content-wrapper">
+          <div class="row">
+           
+            
+  
+ 
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Reclamation Table</h4>
+            <div class="table-responsive">
+              <table class="reclamation-table mt-5 table table-striped">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let reclamation of reclamations">
+                    <td>{{ reclamation.descriptionRec }}</td>
+                    <td>{{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</td>
+                    <td>
+                      <span [ngClass]="{'status-circle': true, 'pending': reclamation.status === 'pending', 'approved': reclamation.status === 'approved'}"></span>
+                      <span class="status-text">{{ reclamation.status }}</span>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger mr-2" (click)="confirmDelete(reclamation.idRec)">Delete</button>
+                      <button class="btn btn-dark btn-icon-text" (click)="navigateToModify(reclamation.idRec)">Modify</button>
+                    </td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="error" class="error">{{ error }}</div>
+    </div>

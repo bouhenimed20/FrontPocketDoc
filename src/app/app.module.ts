@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +12,8 @@ import { AllTemplateBackComponent } from './BackOffice/all-template-back/all-tem
 import { NavbarBackComponent } from './BackOffice/navbar-back/navbar-back.component';
 import { SidebarBackComponent } from './BackOffice/sidebar-back/sidebar-back.component';
 import { ListEventComponent } from './BackOffice/list-event/list-event.component';
+import { ListReclamationComponent } from './BackOffice/liste-reclamation/liste-reclamation.component';
+import { AjouterreclamationComponent } from './FrontOffice/ajouterreclamation/ajouterreclamation.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +24,15 @@ import { ListEventComponent } from './BackOffice/list-event/list-event.component
     AllTemplateBackComponent,
     NavbarBackComponent,
     SidebarBackComponent,
-    ListEventComponent
+    ListEventComponent,
+    ListReclamationComponent,
+    AjouterreclamationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule, // Add FormsModule to imports
+    HttpClientModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

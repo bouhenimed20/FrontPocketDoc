@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReclamationService } from '../../reclamation.service';
 import { Reclamation } from '../../module/Reclamation';
+import { Reponse } from '../../module/Reponse';
+import { ReponseService } from '../../reponse.service';
 
 @Component({
   selector: 'app-reclamation-details',
@@ -10,31 +12,47 @@ import { Reclamation } from '../../module/Reclamation';
 })
 export class ReclamationDetailsComponent implements OnInit {
   reclamation: Reclamation | null = null;
+  response: Reponse = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
 
   constructor(
     private route: ActivatedRoute,
-    private reclamationService: ReclamationService
+    private reclamationService: ReclamationService,
+    private reponseService: ReponseService
   ) {}
 
   ngOnInit(): void {
-    // Retrieve claim ID from route parameter
     const idRec = this.route.snapshot.paramMap.get('idRec');
 
-    // Check if idRec exists
     if (idRec) {
-      // Fetch claim details from the service based on the idRec
       this.reclamationService.getReclamation(parseInt(idRec, 10)).subscribe(
         (reclamation: Reclamation) => {
           this.reclamation = reclamation;
-          console.log(reclamation); // Log the fetched reclamation object for debugging
         },
         (error: any) => {
           console.error('Error fetching claim details:', error);
-          // Handle error (e.g., display error message)
         }
       );
     }
   }
 
-  // Add methods to handle responding to the claim, updating status, etc.
+  addResponse(): void {
+    if (this.reclamation) {
+      this.response.reclamation = this.reclamation;
+      this.reponseService.addResponse(this.response).subscribe(
+        (response: Reponse) => {
+          console.log('Response added successfully:', response);
+          // Reset the response object after it's added
+          this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+        },
+        (error: any) => {
+          console.error('Error adding response:', error);
+          // Handle error (e.g., display error message)
+        }
+      );
+    }
+  }
+  resetResponse(): void {
+    this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+  }
+  
 }

@@ -36,21 +36,39 @@ export class ReclamationDetailsComponent implements OnInit {
   }
 
   addResponse(): void {
-    if (this.reclamation) {
-      this.response.reclamation = this.reclamation;
+    if (this.reclamation && this.response) {
+      // Call the service to add the response
       this.reponseService.addResponse(this.response).subscribe(
         (response: Reponse) => {
-          console.log('Response added successfully:', response);
-          // Reset the response object after it's added
-          this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+          // Check if this.reclamation is not null
+          if (this.reclamation) {
+            // Associate the response with the reclamation using affecterRepARec method
+            this.reponseService.affecterRepARec(response.idRep, this.reclamation.idRec).subscribe(
+              (affectedResponse: Reponse) => {
+                console.log('Response added successfully and associated with reclamation:', affectedResponse);
+                // Reset the response object after it's added
+                this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+              },
+              (error: any) => {
+                console.error('Error associating response with reclamation:', error);
+              }
+            );
+          } else {
+            console.error('Error: Reclamation is null.');
+          }
         },
         (error: any) => {
           console.error('Error adding response:', error);
           // Handle error (e.g., display error message)
         }
       );
+    } else {
+      console.error('Error: Reclamation or response object is null.');
     }
   }
+  
+  
+  
   resetResponse(): void {
     this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
   }

@@ -30,4 +30,14 @@ export class ReponseService {
   deleteResponse(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove-reponse/${id}`);
   }
+
+
+  affecterRepARec(idRep: number, idRec: number): Observable<Reponse> {
+    return this.http.put<Reponse>(`${this.apiUrl}/affecterRepARec/${idRep}/${idRec}`, {});
+  }
+
+  affecterRepAUser(idRep: number, userId: number): Observable<Reponse> {
+    return this.http.put<Reponse>(`${this.apiUrl}/affecterRepAUser/${idRep}/${userId}`, {});
+  }
+
 }

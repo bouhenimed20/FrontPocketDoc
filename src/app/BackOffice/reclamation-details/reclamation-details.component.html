@@ -9,23 +9,26 @@
                 <blockquote class="blockquote">
                   <h4 class="card-title">Reclamation N° {{ reclamation?.idRec }}</h4>
                   <div *ngIf="reclamation">
-                    <p><span class="semi-bold-text">Description:</span>     {{ reclamation.descriptionRec }}</p>
-                    <p><span class="semi-bold-text">Date:</span>     {{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</p>
-                    <p><span class="semi-bold-text">Status:</span>     <span [ngClass]="{'text-success': reclamation.status === 'resolved', 'text-danger': reclamation.status === 'pending'}">{{ reclamation.status }}</span></p>
-             
+                    <p><span class="semi-bold-text">Description:</span> {{ reclamation.descriptionRec }}</p>
+                    <p><span class="semi-bold-text">Date:</span> {{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</p>
+                    <p><span class="semi-bold-text">Status:</span> <span [ngClass]="{'text-success': reclamation.status === 'resolved', 'text-danger': reclamation.status === 'pending'}">{{ reclamation.status }}</span></p>
                   </div>
                 </blockquote>
               </div>
             </div>
           </div>
+          
           <div class="col-12 grid-margin stretch-card">
+            
             <div class="card">
               <div class="card-body">
+                <div *ngIf="submissionSuccess" class="col-12 text-success mb-3 p-2" style="background-color: #d4edda; border-radius: 5px;">Response sent successfully
+                  <!-- Display alert message -->
+                  <script>alert("Votre réponse a été envoyée avec succès.");</script>
+                </div>
                 <!-- Add response form -->
                 <h4 class="card-title">Response</h4>
-                <p class="card-description">
-                  Respond to this claim
-                </p>
+                <p class="card-description">Respond to this claim</p>
                 <form (submit)="addResponse()" class="forms-sample">
                   <div class="form-group">
                     <textarea class="form-control" id="responseContent" rows="5" [(ngModel)]="response.contenuRep" name="contenuRep" required></textarea>

@@ -13,6 +13,8 @@ import { ReponseService } from '../../reponse.service';
 export class ReclamationDetailsComponent implements OnInit {
   reclamation: Reclamation | null = null;
   response: Reponse = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+  submissionSuccess: boolean = false;
+  showSuccessAlert: boolean = false; // Add showSuccessAlert property
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +50,8 @@ export class ReclamationDetailsComponent implements OnInit {
                 console.log('Response added successfully and associated with reclamation:', affectedResponse);
                 // Reset the response object after it's added
                 this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+                // Set submissionSuccess to true to show the success alert
+                this.submissionSuccess = true;
               },
               (error: any) => {
                 console.error('Error associating response with reclamation:', error);
@@ -67,10 +71,9 @@ export class ReclamationDetailsComponent implements OnInit {
     }
   }
   
-  
-  
+
   resetResponse(): void {
     this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
   }
-  
+
 }

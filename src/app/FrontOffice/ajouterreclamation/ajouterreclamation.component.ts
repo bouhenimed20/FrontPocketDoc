@@ -1,52 +1,53 @@
-import { Component } from '@angular/core';
-import { ReclamationService } from '../../reclamation.service'; // Update the path as per your project structure
+import { Component, OnInit } from '@angular/core';
+import { BadwordsService } from '../../badwords.service';
+import { Badwords } from '../../module/Badwords';
 
 @Component({
   selector: 'app-ajouterreclamation',
   templateUrl: './ajouterreclamation.component.html',
   styleUrls: ['./ajouterreclamation.component.css']
 })
-
-export class AjouterreclamationComponent {
+export class AjouterreclamationComponent implements OnInit {
   newReclamation: any = {
     dateRec: this.getTodayDate(),
-    status: 'pending',
-    // Initialize dateRec with today's date in 'YYYY-MM-DD' format
+    status: 'pending'
   };
   submissionSuccess: boolean = false;
-  badWords: string[] = ['3ib', 'haram', 'israel']; // List of bad words
-  badWordsDetected: boolean = false; // Flag to indicate if bad words are detected
+  badWords: Badwords[] = [];
+  badWordsDetected: boolean = false;
 
-  constructor(private reclamationService: ReclamationService) {}
+  constructor(private badwordsService: BadwordsService) {}
+
+  ngOnInit(): void {
+    this.loadBadWords(); // Fetch bad words when component initializes
+  }
+
+  loadBadWords(): void {
+    this.badwordsService.getAllBadwords()
+      .subscribe(
+        (badWords: Badwords[]) => {
+          this.badWords = badWords;
+          console.log('Bad words loaded:', this.badWords);
+        },
+        (error: any) => {
+          console.error('Error loading bad words:', error);
+        }
+      );   
+  }
 
   addReclamation() {
-    if (this.containsBadWords(this.newReclamation.descriptionRec)) {
-      this.badWordsDetected = true; // Set flag to true if bad words are detected
-      return; // Prevent submission if bad words are detected
+    this.checkForBadWords();
+    if (this.badWordsDetected) {
+      return;
     }
-
-    this.reclamationService.addReclamation(this.newReclamation)
-      .subscribe(
-        (response) => {
-          console.log("Reclamation added successfully:", response);
-          // Clear the form after successful submission
-          this.newReclamation = {};
-          // Show success message
-          this.submissionSuccess = true;
-        },
-        (error) => {
-          console.error("Error adding reclamation:", error);
-          // Handle error as needed, for example, show error message
-        }
-      );
+    // Your addReclamation logic here...
   }
 
-  // Hcheck if the input contains any bad words
   containsBadWords(input: string): boolean {
-    const regex = new RegExp(this.badWords.join('|'), 'gi');
+    const regex = new RegExp(this.badWords?.map(badWord => badWord.badword).join('|') || '', 'gi');
     return regex.test(input);
   }
-
+  
   getTodayDate(): string {
     const today = new Date();
     const year = today.getFullYear();
@@ -55,12 +56,12 @@ export class AjouterreclamationComponent {
     return `${year}-${month}-${day}`;
   }
 
-  // Method to check for bad words when input changes
   checkForBadWords() {
-    if (this.containsBadWords(this.newReclamation.descriptionRec)) {
-      this.badWordsDetected = true;
+    if (this.newReclamation.descriptionRec) {
+      this.badWordsDetected = this.containsBadWords(this.newReclamation.descriptionRec);
     } else {
       this.badWordsDetected = false;
     }
   }
+
 }

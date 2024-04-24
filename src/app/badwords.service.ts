@@ -7,24 +7,23 @@ import { Badwords } from './module/Badwords';
   providedIn: 'root'
 })
 export class BadwordsService {
-  private apiUrl = 'http://localhost:9090/badwords'; // Replace 'your_api_url' with your actual API endpoint
+  private apiUrl = 'http://localhost:9090/badwords'; // Correct API URL
 
   constructor(private http: HttpClient) { }
 
-  getAllBadwords(): Observable<Badwords[]> { // Ensure the return type is Observable<Badwords[]>
-    return this.http.get<Badwords[]>(`${this.apiUrl}/badwords`);
+  getAllBadwords(): Observable<Badwords[]> {
+    return this.http.get<Badwords[]>(`${this.apiUrl}/retrieve-all`); // Correct endpoint
   }
 
-
   getBadwordById(id: number): Observable<Badwords> {
-    return this.http.get<Badwords>(`${this.apiUrl}/badwords/${id}`);
+    return this.http.get<Badwords>(`${this.apiUrl}/retrieve/${id}`);
   }
 
   addBadword(badword: Badwords): Observable<Badwords> {
-    return this.http.post<Badwords>(`${this.apiUrl}/badwords`, badword);
+    return this.http.post<Badwords>(`${this.apiUrl}/add-badwords`, badword);
   }
 
   removeBadword(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/badwords/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/remove/${id}`);
   }
 }

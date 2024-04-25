@@ -51,10 +51,9 @@
                 </div>
                 <!-- Add response form -->
                 <h4 class="card-title">Response</h4>
-                <p class="card-description">Respond to this claim</p>
                 <form (submit)="addResponse()" class="forms-sample">
                   <div class="form-group">
-                    <textarea class="form-control" id="responseContent" rows="5" [(ngModel)]="response.contenuRep" name="contenuRep" required></textarea>
+                    <textarea placeholder="Respond to this claim" class="form-control" id="responseContent" rows="5" [(ngModel)]="response.contenuRep" name="contenuRep" required></textarea>
                   </div>
                   <button type="submit" class="btn btn-primary mr-2">Submit</button>
                   <button type="button" class="btn btn-light" (click)="resetResponse()">Cancel</button>

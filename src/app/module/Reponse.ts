@@ -4,5 +4,6 @@ export interface Reponse {
   idRep: number;
   contenuRep: string;
   dateRep: Date;
-  reclamation: Reclamation;
+  // Make reclamation property optional
+  reclamation?: Reclamation;
 }

@@ -12,14 +12,21 @@ import { ReponseService } from '../../reponse.service';
 })
 export class ReclamationDetailsComponent implements OnInit {
   reclamation: Reclamation | null = null;
-  response: Reponse = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+  response: Reponse = { 
+    idRep: 0, 
+    contenuRep: '', 
+    dateRep: new Date()  
+  };
+  responses: Reponse[] = []; // Array to hold responses
   submissionSuccess: boolean = false;
   showSuccessAlert: boolean = false; // Add showSuccessAlert property
-
+  priority: string = ''; // Add priority property
+  
   constructor(
     private route: ActivatedRoute,
     private reclamationService: ReclamationService,
     private reponseService: ReponseService
+    
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +36,19 @@ export class ReclamationDetailsComponent implements OnInit {
       this.reclamationService.getReclamation(parseInt(idRec, 10)).subscribe(
         (reclamation: Reclamation) => {
           this.reclamation = reclamation;
+
+          // Calculate priority based on some criteria
+          this.priority = this.calculatePriority(this.reclamation); // Call your priority calculation method here
+
+          // Fetch responses for the current reclamation
+          this.reponseService.getResponsesForReclamation(reclamation.idRec).subscribe(
+            (responses: Reponse[]) => {
+              this.responses = responses;
+            },
+            (error: any) => {
+              console.error('Error fetching responses:', error);
+            }
+          );
         },
         (error: any) => {
           console.error('Error fetching claim details:', error);
@@ -48,8 +68,18 @@ export class ReclamationDetailsComponent implements OnInit {
             this.reponseService.affecterRepARec(response.idRep, this.reclamation.idRec).subscribe(
               (affectedResponse: Reponse) => {
                 console.log('Response added successfully and associated with reclamation:', affectedResponse);
+
+                // Determine the priority of the reclamation
+                const priority = this.calculatePriority(this.reclamation);
+                console.log('Priority of reclamation:', priority);
+
                 // Reset the response object after it's added
-                this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+                this.response = { 
+                  idRep: 0, 
+                  contenuRep: '', 
+                  dateRep: new Date()
+                };
+
                 // Set submissionSuccess to true to show the success alert
                 this.submissionSuccess = true;
               },
@@ -71,9 +101,23 @@ export class ReclamationDetailsComponent implements OnInit {
     }
   }
   
-
   resetResponse(): void {
-    this.response = { idRep: 0, contenuRep: '', dateRep: new Date(), reclamation: { idRec: 0, descriptionRec: '', dateRec: new Date(), status: '' } };
+    this.response = { 
+      idRep: 0, 
+      contenuRep: '', 
+      dateRep: new Date()
+    };
   }
 
+  private calculatePriority(reclamation: Reclamation | null): string {
+    // Define an array of possible priorities
+    const priorities = ['High', 'Medium', 'Low'];
+  
+    // Generate a random index to select a priority from the array
+    const randomIndex = Math.floor(Math.random() * priorities.length);
+  
+    // Return the priority corresponding to the random index
+    return priorities[randomIndex];
+  }
+  
 }

@@ -39,5 +39,11 @@ export class ReponseService {
   affecterRepAUser(idRep: number, userId: number): Observable<Reponse> {
     return this.http.put<Reponse>(`${this.apiUrl}/affecterRepAUser/${idRep}/${userId}`, {});
   }
+  getResponsesForReclamation(reclamationId: number): Observable<Reponse[]> {
+    const url = `${this.apiUrl}/${reclamationId}/responses`;
+    return this.http.get<Reponse[]>(url);
+  }
+  
 
+  
 }

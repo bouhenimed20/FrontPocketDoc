@@ -8,7 +8,7 @@ describe('AllTemplateBackComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AllTemplateBackComponent]
+      declarations: [AllTemplateBackComponent],
     });
     fixture = TestBed.createComponent(AllTemplateBackComponent);
     component = fixture.componentInstance;

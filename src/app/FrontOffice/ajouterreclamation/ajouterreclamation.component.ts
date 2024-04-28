@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAiService } from 'src/app/google-ai.service';
 import { BadwordsService } from '../../badwords.service';
 import { Badwords } from '../../module/Badwords';
 import { ReclamationService } from '../../reclamation.service'; // Import ReclamationService if not imported
@@ -13,6 +14,7 @@ export class AjouterreclamationComponent implements OnInit {
     dateRec: this.getTodayDate(),
     status: 'pending',
     descriptionRec: '',
+    priority: '',
   };
   submissionSuccess: boolean = false;
   badWords: Badwords[] = [];
@@ -20,7 +22,8 @@ export class AjouterreclamationComponent implements OnInit {
 
   constructor(
     private badwordsService: BadwordsService,
-    private reclamationService: ReclamationService // Inject ReclamationService
+    private reclamationService: ReclamationService, // Inject ReclamationService,
+    private googleAiService: GoogleAiService // Inject GoogleAiService
   ) {}
 
   ngOnInit(): void {
@@ -39,28 +42,45 @@ export class AjouterreclamationComponent implements OnInit {
     );
   }
 
-  addReclamation() {
+  async addReclamation() {
     this.checkForBadWords();
     if (this.badWordsDetected) {
       return;
     }
+    this.googleAiService
+      .generateStory(
+        'Generate a priority for this claim based on the emotions of the user and the response will be only one word: high, medium or low. this is the reclamation' +
+          this.newReclamation.descriptionRec
+      )
+      .subscribe(
+        (res) => {
+          // Extract priority from the generated story
+          const priority = res.candidates[0].content.parts[0].text;
 
-    this.reclamationService.addReclamation(this.newReclamation).subscribe(
-      (response: any) => {
-        // Explicitly type response
-        console.log('Reclamation added successfully:', response);
-        this.newReclamation = {
-          dateRec: this.getTodayDate(),
-          status: 'pending',
-          descriptionRec: '',
-        };
-        this.submissionSuccess = true;
-      },
-      (error: any) => {
-        // Explicitly type error
-        console.error('Error adding reclamation:', error);
-      }
-    );
+          // Set the priority property
+          this.newReclamation.priority = priority;
+          this.reclamationService.addReclamation(this.newReclamation).subscribe(
+            (response: any) => {
+              // Explicitly type response
+              console.log('Reclamation added successfully:', response);
+              this.newReclamation = {
+                dateRec: this.getTodayDate(),
+                status: 'pending',
+                descriptionRec: '',
+              };
+              this.submissionSuccess = true;
+            },
+            (error: any) => {
+              // Explicitly type error
+              console.error('Error adding reclamation:', error);
+            }
+          );
+          console.log('Priority of reclamation:', priority);
+        },
+        (error) => {
+          console.error('Error generating priority:', error);
+        }
+      );
   }
 
   containsBadWords(input: string): boolean {

@@ -4,9 +4,12 @@
       <div class="content-wrapper">
         <div class="row">
           <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
-            <div class="card data-icon-card-primary" style="margin-bottom: 20px;">
+            <div
+              class="card data-icon-card-primary"
+              style="margin-bottom: 20px"
+            >
               <div class="card-body">
-                <p class="card-title text-white">Nombre de Reclamation</p>                      
+                <p class="card-title text-white">Nombre de Reclamation</p>
                 <div class="row">
                   <div class="col-8 text-white">
                     <h2>{{ totalClaims }}</h2>
@@ -17,7 +20,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
@@ -25,24 +28,50 @@
                 <table class="reclamation-table mt-5 table table-striped">
                   <thead>
                     <tr>
+                      <th></th>
                       <th>N°</th>
                       <th>Description</th>
                       <th>Date</th>
                       <th>Status</th>
+                      <th>Priority</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let reclamation of reclamations">
+                      <th class="light_container">
+                        <div class="light"></div>
+                      </th>
                       <td>{{ reclamation.idRec }}</td>
-                      <td>{{ reclamation.descriptionRec.toString() | slice:0:50 }}...</td>
-                      <td>{{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</td>
                       <td>
-                        <span class="badge badge-warning">{{ reclamation.status }}</span>
+                        {{
+                          reclamation.descriptionRec.toString()
+                            | slice : 0 : 50
+                        }}...
+                      </td>
+                      <td>{{ reclamation.dateRec | date : "dd/MM/yyyy" }}</td>
+                      <td>
+                        <span class="badge badge-warning">{{
+                          reclamation.status
+                        }}</span>
                       </td>
                       <td>
-                        <button class="btn btn-danger btn-sm mr-2" (click)="confirmDelete(reclamation.idRec)">Delete</button>
-                        <button class="btn btn-info btn-sm mr-2" (click)="respondToClaim(reclamation.idRec)">Respond</button>
+                        {{ reclamation.priority }}
+                      </td>
+
+                      <td>
+                        <button
+                          class="btn btn-danger btn-sm mr-2"
+                          (click)="confirmDelete(reclamation.idRec)"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          class="btn btn-info btn-sm mr-2"
+                          (click)="respondToClaim(reclamation.idRec)"
+                        >
+                          Respond
+                        </button>
                       </td>
                     </tr>
                   </tbody>

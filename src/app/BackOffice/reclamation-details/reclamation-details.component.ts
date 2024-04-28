@@ -37,9 +37,6 @@ export class ReclamationDetailsComponent implements OnInit {
         (reclamation: Reclamation) => {
           this.reclamation = reclamation;
 
-          // Calculate priority based on the reclamation content
-          this.calculatePriority(this.reclamation); // Call your priority calculation method here
-
           // Fetch responses for the current reclamation
           this.reponseService
             .getResponsesForReclamation(reclamation.idRec)
@@ -116,33 +113,6 @@ export class ReclamationDetailsComponent implements OnInit {
     };
   }
 
-  private calculatePriority(reclamation: Reclamation | null): void {
-    if (!reclamation) {
-      console.error('Error: Reclamation is null.');
-      return;
-    }
-
-    // Use Google AI to generate a priority based on the reclamation content
-    this.googleAiService
-      .generateStory(
-        'Generate a priority for this claim based on the emotions of the user and the response will be only one word: high, medium or low. this is the reclamation' +
-          reclamation.descriptionRec
-      )
-      .subscribe(
-        (res) => {
-          // Extract priority from the generated story
-          const priority = res.candidates[0].content.parts[0].text;
-
-          // Set the priority property
-          this.priority = priority;
-
-          console.log('Priority of reclamation:', priority);
-        },
-        (error) => {
-          console.error('Error generating priority:', error);
-        }
-      );
-  }
   answerTask(): void {
     // Use Google AI to generate a priority based on the reclamation content
     this.googleAiService

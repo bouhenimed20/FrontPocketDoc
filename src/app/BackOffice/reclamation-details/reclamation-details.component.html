@@ -7,13 +7,29 @@
             <div class="card">
               <div class="card-body">
                 <blockquote class="blockquote">
-                  <h4 class="card-title">Reclamation N° {{ reclamation?.idRec }}</h4>
+                  <h4 class="card-title">
+                    Reclamation N° {{ reclamation?.idRec }}
+                  </h4>
                   <div *ngIf="reclamation">
-                      <p><span class="semi-bold-text">Date:</span> {{ reclamation.dateRec | date: 'dd/MM/yyyy' }}</p>
-                    <p><span class="semi-bold-text">Status:</span> 
-                      <span [ngClass]="{'text-success': reclamation.status === 'resolved', 'text-danger': reclamation.status === 'pending'}">{{ reclamation.status }}</span>
+                    <p>
+                      <span class="semi-bold-text">Date:</span>
+                      {{ reclamation.dateRec | date : "dd/MM/yyyy" }}
                     </p>
-                    <p><span class="semi-bold-text">Priority:</span> {{ priority }}</p> <!-- Display priority here -->
+                    <p>
+                      <span class="semi-bold-text">Status:</span>
+                      <span
+                        [ngClass]="{
+                          'text-success': reclamation.status === 'resolved',
+                          'text-danger': reclamation.status === 'pending'
+                        }"
+                        >{{ reclamation.status }}</span
+                      >
+                    </p>
+                    <p>
+                      <span class="semi-bold-text">Priority:</span>
+                      {{ priority }}
+                    </p>
+                    <!-- Display priority here -->
                   </div>
                 </blockquote>
               </div>
@@ -24,18 +40,25 @@
               <div class="card-body">
                 <h4 class="card-title">Chat Box</h4>
                 <div *ngIf="reclamation">
-                  <p class="text-white bg-dark pl-1"><span class="semi-bold-text">User:</span> {{ reclamation.descriptionRec }}</p>
+                  <p class="text-white bg-dark pl-1">
+                    <span class="semi-bold-text">User:</span>
+                    {{ reclamation.descriptionRec }}
+                  </p>
                 </div>
                 <div *ngIf="responses.length > 0">
                   <div *ngFor="let response of responses" class="card mb-1">
                     <!-- Display response details here -->
-                    <ul class="list-arrow" style="margin-bottom: 0;"> <!-- Add inline style to remove margin -->
-                      <li><span class="semi-bold-text">Admin:</span> {{ response.contenuRep }}</li>
+                    <ul class="list-arrow" style="margin-bottom: 0">
+                      <!-- Add inline style to remove margin -->
+                      <li>
+                        <span class="semi-bold-text">Admin:</span>
+                        {{ response.contenuRep }}
+                      </li>
                       <!-- Add more details as needed -->
                     </ul>
                   </div>
                 </div>
-                
+
                 <div *ngIf="responses.length === 0">
                   No responses available.
                 </div>
@@ -45,18 +68,56 @@
           <div class="col-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <div *ngIf="submissionSuccess" class="col-12 text-success mb-3 p-2" style="background-color: #d4edda; border-radius: 5px;">Response sent successfully
+                <div
+                  *ngIf="submissionSuccess"
+                  class="col-12 text-success mb-3 p-2"
+                  style="background-color: #d4edda; border-radius: 5px"
+                >
+                  Response sent successfully
+
                   <!-- Display alert message -->
-                  <script>alert("Votre réponse a été envoyée avec succès.");</script>
+                  <script>
+                    alert("Votre réponse a été envoyée avec succès.");
+                  </script>
+                </div>
+                <div
+                  *ngIf="errorAdd"
+                  class="col-12 text-danger mb-3 p-2"
+                  style="background-color: red; border-radius: 5px"
+                >
+                  Response sent successfully
                 </div>
                 <!-- Add response form -->
                 <h4 class="card-title">Response</h4>
                 <form (submit)="addResponse()" class="forms-sample">
                   <div class="form-group">
-                    <textarea placeholder="Respond to this claim" class="form-control" id="responseContent" rows="5" [(ngModel)]="response.contenuRep" name="contenuRep" required></textarea>
+                    <textarea
+                      placeholder="Respond to this claim"
+                      class="form-control"
+                      id="responseContent"
+                      rows="5"
+                      [(ngModel)]="response.contenuRep"
+                      name="contenuRep"
+                      required
+                    ></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                  <button type="button" class="btn btn-light" (click)="resetResponse()">Cancel</button>
+                  <button type="submit" class="btn btn-primary mr-2">
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-light"
+                    (click)="answerTask()"
+                  >
+                    Generate response auto
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-light"
+                    (click)="resetResponse()"
+                  >
+                    Cancel
+                  </button>
                 </form>
               </div>
             </div>

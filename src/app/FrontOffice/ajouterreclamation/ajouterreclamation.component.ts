@@ -6,13 +6,13 @@ import { ReclamationService } from '../../reclamation.service'; // Import Reclam
 @Component({
   selector: 'app-ajouterreclamation',
   templateUrl: './ajouterreclamation.component.html',
-  styleUrls: ['./ajouterreclamation.component.css']
+  styleUrls: ['./ajouterreclamation.component.css'],
 })
 export class AjouterreclamationComponent implements OnInit {
   newReclamation: any = {
     dateRec: this.getTodayDate(),
     status: 'pending',
-    descriptionRec: ''
+    descriptionRec: '',
   };
   submissionSuccess: boolean = false;
   badWords: Badwords[] = [];
@@ -28,16 +28,15 @@ export class AjouterreclamationComponent implements OnInit {
   }
 
   loadBadWords(): void {
-    this.badwordsService.getAllBadwords()
-      .subscribe(
-        (badWords: Badwords[]) => {
-          this.badWords = badWords;
-          console.log('Bad words loaded:', this.badWords);
-        },
-        (error: any) => {
-          console.error('Error loading bad words:', error);
-        }
-      );   
+    this.badwordsService.getAllBadwords().subscribe(
+      (badWords: Badwords[]) => {
+        this.badWords = badWords;
+        console.log('Bad words loaded:', this.badWords);
+      },
+      (error: any) => {
+        console.error('Error loading bad words:', error);
+      }
+    );
   }
 
   addReclamation() {
@@ -45,25 +44,33 @@ export class AjouterreclamationComponent implements OnInit {
     if (this.badWordsDetected) {
       return;
     }
-    
-    this.reclamationService.addReclamation(this.newReclamation)
-      .subscribe(
-        (response: any) => { // Explicitly type response
-          console.log("Reclamation added successfully:", response);
-          this.newReclamation = { dateRec: this.getTodayDate(), status: 'pending', descriptionRec: '' };
-          this.submissionSuccess = true;
-        },
-        (error: any) => { // Explicitly type error
-          console.error("Error adding reclamation:", error);
-        }
-      );
+
+    this.reclamationService.addReclamation(this.newReclamation).subscribe(
+      (response: any) => {
+        // Explicitly type response
+        console.log('Reclamation added successfully:', response);
+        this.newReclamation = {
+          dateRec: this.getTodayDate(),
+          status: 'pending',
+          descriptionRec: '',
+        };
+        this.submissionSuccess = true;
+      },
+      (error: any) => {
+        // Explicitly type error
+        console.error('Error adding reclamation:', error);
+      }
+    );
   }
 
   containsBadWords(input: string): boolean {
-    const regex = new RegExp(this.badWords?.map(badWord => badWord.badword).join('|') || '', 'gi');
+    const regex = new RegExp(
+      this.badWords?.map((badWord) => badWord.badword).join('|') || '',
+      'gi'
+    );
     return regex.test(input);
   }
-  
+
   getTodayDate(): string {
     const today = new Date();
     const year = today.getFullYear();
@@ -74,7 +81,9 @@ export class AjouterreclamationComponent implements OnInit {
 
   checkForBadWords() {
     if (this.newReclamation.descriptionRec) {
-      this.badWordsDetected = this.containsBadWords(this.newReclamation.descriptionRec);
+      this.badWordsDetected = this.containsBadWords(
+        this.newReclamation.descriptionRec
+      );
     } else {
       this.badWordsDetected = false;
     }

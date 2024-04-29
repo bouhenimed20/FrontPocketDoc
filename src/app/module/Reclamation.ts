@@ -6,6 +6,5 @@ export interface Reclamation {
   dateRec: Date;
   status: string;
   priority: string;
-  // Include the responses property
   responses: Reponse[];
 }

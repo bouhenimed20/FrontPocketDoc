@@ -82,6 +82,31 @@ export class ReclamationDetailsComponent implements OnInit {
 
                   // Set submissionSuccess to true to show the success alert
                   this.submissionSuccess = true;
+
+                  // Change the status of the reclamation to "Completed" if it exists
+                  if (this.reclamation) {
+                    this.reclamation.status = 'Completed';
+
+                    // Update the status of the reclamation in the database
+                    this.reclamationService
+                      .modifyReclamation(this.reclamation)
+                      .subscribe(
+                        (updatedReclamation: Reclamation) => {
+                          console.log(
+                            'Reclamation status updated to "closed":',
+                            updatedReclamation
+                          );
+                        },
+                        (error: any) => {
+                          console.error(
+                            'Error updating reclamation status:',
+                            error
+                          );
+                        }
+                      );
+                  } else {
+                    console.error('Error: Reclamation is null.');
+                  }
                 },
                 (error: any) => {
                   console.error(
@@ -117,7 +142,7 @@ export class ReclamationDetailsComponent implements OnInit {
     // Use Google AI to generate a priority based on the reclamation content
     this.googleAiService
       .generateStory(
-        'please give me a short answer for this claim: ' +
+        'Our website PocketDoc helps students for their health care and you have to answer claims that are linked with our goal so please give me a short answer for this claim: ' +
           this.reclamation?.descriptionRec
       )
       .subscribe(

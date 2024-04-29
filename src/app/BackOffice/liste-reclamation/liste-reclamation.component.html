@@ -40,8 +40,12 @@
                   <tbody>
                     <tr *ngFor="let reclamation of reclamations">
                       <th class="light_container">
-                        <div class="light"></div>
+                        <div
+                          *ngIf="reclamation.priority === 'high'"
+                          class="light"
+                        ></div>
                       </th>
+
                       <td>{{ reclamation.idRec }}</td>
                       <td>
                         {{
@@ -51,9 +55,16 @@
                       </td>
                       <td>{{ reclamation.dateRec | date : "dd/MM/yyyy" }}</td>
                       <td>
-                        <span class="badge badge-warning">{{
-                          reclamation.status
-                        }}</span>
+                        <span
+                          [class]="
+                            'badge badge-' +
+                            (reclamation.status === 'Completed'
+                              ? 'success'
+                              : 'warning')
+                          "
+                        >
+                          {{ reclamation.status }}
+                        </span>
                       </td>
                       <td>
                         {{ reclamation.priority }}

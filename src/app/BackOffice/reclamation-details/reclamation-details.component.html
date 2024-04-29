@@ -82,11 +82,16 @@
                 </div>
                 <div
                   *ngIf="errorAdd"
-                  class="col-12 text-danger mb-3 p-2"
-                  style="background-color: red; border-radius: 5px"
+                  class="col-12 mb-3 p-2"
+                  style="
+                    background-color: rgb(255, 112, 112);
+                    border-radius: 5px;
+                    color: white;
+                  "
                 >
-                  Response sent successfully
+                  You have to type something in your response
                 </div>
+
                 <!-- Add response form -->
                 <h4 class="card-title">Response</h4>
                 <form (submit)="addResponse()" class="forms-sample">

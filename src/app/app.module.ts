@@ -15,6 +15,7 @@ import { ListEventComponent } from './BackOffice/list-event/list-event.component
 import { ListReclamationComponent } from './BackOffice/liste-reclamation/liste-reclamation.component';
 import { AjouterreclamationComponent } from './FrontOffice/ajouterreclamation/ajouterreclamation.component';
 import { ReclamationDetailsComponent } from './BackOffice/reclamation-details/reclamation-details.component';
+import { DashboardComponent } from './BackOffice/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ReclamationDetailsComponent } from './BackOffice/reclamation-details/re
     ListEventComponent,
     ListReclamationComponent,
     AjouterreclamationComponent,
-    ReclamationDetailsComponent
+    ReclamationDetailsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

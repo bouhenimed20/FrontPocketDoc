@@ -6,26 +6,28 @@ import { ListEventComponent } from './BackOffice/list-event/list-event.component
 import { ListReclamationComponent } from './BackOffice/liste-reclamation/liste-reclamation.component';
 import { AjouterreclamationComponent } from './FrontOffice/ajouterreclamation/ajouterreclamation.component';
 import { ReclamationDetailsComponent } from './BackOffice/reclamation-details/reclamation-details.component';
+import { DashboardComponent } from './BackOffice/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: "", component: AllTemplateFrontComponent,
-    children: [
-      { path: "reclamation", component: AjouterreclamationComponent },
-    ]
+    path: '',
+    component: AllTemplateFrontComponent,
+    children: [{ path: 'reclamation', component: AjouterreclamationComponent }],
   },
   {
-    path: "admin", component: AllTemplateBackComponent,
+    path: 'admin',
+    component: AllTemplateBackComponent,
     children: [
-      { path: "event", component: ListEventComponent },
-      { path: "reclamation", component: ListReclamationComponent },
-      { path: "reclamation/:idRec", component: ReclamationDetailsComponent }, // Define route for claim details component
-    ]
-  }
+      { path: 'event', component: ListEventComponent },
+      { path: 'reclamation', component: ListReclamationComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'reclamation/:idRec', component: ReclamationDetailsComponent }, // Define route for claim details component
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

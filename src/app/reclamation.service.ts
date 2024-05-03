@@ -52,8 +52,8 @@ export class ReclamationService {
     );
   }
 
-  calculateWeeklyReclamations(): Observable<number> {
-    return this.http.get<number>(
+  calculateWeeklyReclamations(): Observable<number[]> {
+    return this.http.get<number[]>(
       `${this.apiUrl}/calculate-weekly-reclamations`
     );
   }

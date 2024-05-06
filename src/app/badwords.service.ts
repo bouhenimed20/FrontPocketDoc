@@ -4,15 +4,15 @@ import { Observable } from 'rxjs';
 import { Badwords } from './module/Badwords';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BadwordsService {
-  private apiUrl = 'http://localhost:9090/badwords'; // Correct API URL
+  private apiUrl = 'http://localhost:8089/badwords'; // Correct API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllBadwords(): Observable<Badwords[]> {
-    return this.http.get<Badwords[]>(`${this.apiUrl}/retrieve-all`); // Correct endpoint
+    return this.http.get<Badwords[]>(`${this.apiUrl}/retrieve-all`);
   }
 
   getBadwordById(id: number): Observable<Badwords> {

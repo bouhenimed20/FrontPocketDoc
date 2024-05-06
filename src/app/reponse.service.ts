@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { Reponse } from './module/Reponse'; // Make sure to import the Reponse model
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReponseService {
-  private apiUrl = 'http://localhost:9090/reponse'; // Adjust the URL to match your backend API
+  private apiUrl = 'http://localhost:8089/reponse'; // Adjust the URL to match your backend API
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllResponses(): Observable<Reponse[]> {
     return this.http.get<Reponse[]>(`${this.apiUrl}/retrieve-all-reponse`);
@@ -31,19 +31,21 @@ export class ReponseService {
     return this.http.delete<void>(`${this.apiUrl}/remove-reponse/${id}`);
   }
 
-
   affecterRepARec(idRep: number, idRec: number): Observable<Reponse> {
-    return this.http.put<Reponse>(`${this.apiUrl}/affecterRepARec/${idRep}/${idRec}`, {});
+    return this.http.put<Reponse>(
+      `${this.apiUrl}/affecterRepARec/${idRep}/${idRec}`,
+      {}
+    );
   }
 
   affecterRepAUser(idRep: number, userId: number): Observable<Reponse> {
-    return this.http.put<Reponse>(`${this.apiUrl}/affecterRepAUser/${idRep}/${userId}`, {});
+    return this.http.put<Reponse>(
+      `${this.apiUrl}/affecterRepAUser/${idRep}/${userId}`,
+      {}
+    );
   }
   getResponsesForReclamation(reclamationId: number): Observable<Reponse[]> {
     const url = `${this.apiUrl}/${reclamationId}/responses`;
     return this.http.get<Reponse[]>(url);
   }
-  
-
-  
 }

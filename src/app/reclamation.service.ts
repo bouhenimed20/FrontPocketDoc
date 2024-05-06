@@ -7,7 +7,7 @@ import { Reclamation } from './module/Reclamation'; // Define the Reclamation in
   providedIn: 'root',
 })
 export class ReclamationService {
-  private apiUrl = 'http://localhost:9090/reclamation';
+  private apiUrl = 'http://localhost:8089/reclamation';
 
   constructor(private http: HttpClient) {}
 
